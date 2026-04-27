@@ -7,7 +7,7 @@ import {
   rejectModalityCancellationByDirector,
 } from "../../services/directorService";
 import ConfirmModal from "../../components/ConfirmModal";
-import "../../styles/council/CancellationRequests.css";
+import "../../styles/council/cancellationrequests.css";
 
 export default function DirectorCancellationRequests() {
   const navigate = useNavigate();

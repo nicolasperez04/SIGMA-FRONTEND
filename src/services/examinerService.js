@@ -360,7 +360,7 @@ export const getStatusLabel = (status) => {
     CORRECTIONS_SUBMITTED_TO_COMMITTEE: "Correcciones Enviadas a Comité",
     CORRECTIONS_SUBMITTED_TO_EXAMINERS: "Correcciones Enviadas a Jurado",
     CORRECTIONS_APPROVED: "Correcciones Aprobadas",
-    CORRECTIONS_REJECTED_FINAL: "Correcciones Rechazadas (Final)",
+    CORRECTIONS_REJECTED_FINAL: "Modalidad Rechazada (Final)",
 
     // Revisión de comité
     READY_FOR_PROGRAM_CURRICULUM_COMMITTEE: "Pendiente Comité de Currículo",

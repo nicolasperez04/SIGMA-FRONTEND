@@ -209,7 +209,7 @@ export default function StudentProfileProgramHead() {
       "CORRECTIONS_SUBMITTED_TO_COMMITTEE": "Correcciones enviadas a Comité",
       "CORRECTIONS_SUBMITTED_TO_EXAMINERS": "Correcciones enviadas a Jurado",
       "CORRECTIONS_APPROVED": "Correcciones aprobadas",
-      "CORRECTIONS_REJECTED_FINAL": "Correcciones rechazadas (final)",
+      "CORRECTIONS_REJECTED_FINAL": "Modalidad Rechazada (Final)",
 
       // ========== REVISIÓN DE COMITÉ ========== 
       "READY_FOR_PROGRAM_CURRICULUM_COMMITTEE": "Listo para Comité de Currículo",

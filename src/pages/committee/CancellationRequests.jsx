@@ -7,7 +7,7 @@ import {
   rejectCancellation,
 } from "../../services/committeeService";
 import ConfirmModal from "../../components/ConfirmModal";
-import "../../styles/council/CancellationRequests.css";
+import "../../styles/council/cancellationrequests.css";
 
 export default function CancellationRequests() {
   const navigate = useNavigate();

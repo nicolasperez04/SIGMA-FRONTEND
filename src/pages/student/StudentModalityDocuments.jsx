@@ -866,7 +866,7 @@ function DocumentCard({
             </div>
           ) : (
             <div className="document-locked-message">
-              Ya subiste este documento. Si necesitas modificarlo, contacta al Jefe de Programa.
+              Ya subiste este documento. Si necesitas modificarlo, contacta a tu director de proyecto o a la jefatura de programa.
             </div>
           )}
         </div>

@@ -18,7 +18,7 @@ export const PROCESS_STATUSES = [
   { value: 'CORRECTIONS_SUBMITTED_TO_COMMITTEE', label: 'Correcciones Enviadas a Comité' },
   { value: 'CORRECTIONS_SUBMITTED_TO_EXAMINERS', label: 'Correcciones Enviadas a Jurado' },
   { value: 'CORRECTIONS_APPROVED', label: 'Correcciones Aprobadas' },
-  { value: 'CORRECTIONS_REJECTED_FINAL', label: 'Correcciones Rechazadas (Final)' },
+  { value: 'CORRECTIONS_REJECTED_FINAL', label: 'Modalidad Rechazada (Final)' },
 
   // ========== REVISIÓN DE COMITÉ ========== 
   { value: 'READY_FOR_PROGRAM_CURRICULUM_COMMITTEE', label: 'Listo para Comité' },

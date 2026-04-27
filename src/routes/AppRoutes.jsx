@@ -66,7 +66,7 @@ import Modalities from "../pages/admin/Modalities";
 import Requirements from "../pages/admin/Requirements";
 import Documents from "../pages/admin/Documents";
 import Assignments from "../pages/admin/Assignments";
-import ProgramDegreeModalities from "../pages/admin/ProgramDegreeModalities";
+import ProgramDegreeModalities from "../pages/admin/Programdegreemodalities";
 
 function AppRoutes() {
   return (

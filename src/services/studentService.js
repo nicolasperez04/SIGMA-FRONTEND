@@ -460,7 +460,7 @@ export const MODALITY_STATUS_OPTIONS = [
   { value: "CORRECTIONS_SUBMITTED_TO_COMMITTEE", label: "Correcciones Enviadas a Comité" },
   { value: "CORRECTIONS_SUBMITTED_TO_EXAMINERS", label: "Correcciones Enviadas a Jurado" },
   { value: "CORRECTIONS_APPROVED", label: "Correcciones Aprobadas" },
-  { value: "CORRECTIONS_REJECTED_FINAL", label: "Correcciones Rechazadas (Final)" },
+  { value: "CORRECTIONS_REJECTED_FINAL", label: "Modalidad Rechazada (Final)" },
   { value: "READY_FOR_PROGRAM_CURRICULUM_COMMITTEE", label: "Pendiente Comité de Currículo" },
   { value: "UNDER_REVIEW_PROGRAM_CURRICULUM_COMMITTEE", label: "En Revisión por Comité de Currículo" },
   { value: "CORRECTIONS_REQUESTED_PROGRAM_CURRICULUM_COMMITTEE", label: "Correcciones Solicitadas por Comité" },

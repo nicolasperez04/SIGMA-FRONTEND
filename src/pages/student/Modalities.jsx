@@ -667,7 +667,7 @@ return {
                 <div className="modal-detail-info">
                   <strong>Tipo:</strong>{' '}
                   {modalityAllowsGroup(modalityDetail) ? (
-                    <span style={{ color: '#7A1117', fontWeight: 700 }}>Individual o Grupal (hasta 3 integrantes)</span>
+                    <span style={{ color: '#7A1117', fontWeight: 700 }}>Individual o Grupal (hasta 2 integrantes)</span>
                   ) : (
                     <span style={{ color: '#7A1117', fontWeight: 700 }}>Solo Individual</span>
                   )}
@@ -800,7 +800,7 @@ return {
               >
                 <span className="type-icon" style={{ fontSize: '3.5rem', color: '#7A1117' }}>👥</span>
                 <span className="type-label" style={{ color: '#7A1117', fontWeight: 700, fontSize: '1.25rem' }}>Grupal</span>
-                <span className="type-description" style={{ color: '#7A1117cc', fontSize: '1rem', marginTop: '0.5rem' }}>Hasta 3 integrantes (incluido tú)</span>
+                <span className="type-description" style={{ color: '#7A1117cc', fontSize: '1rem', marginTop: '0.5rem' }}>Hasta 2 integrantes (incluido tú)</span>
                 <span style={{
                   position: 'absolute',
                   top: '1rem',
@@ -849,7 +849,7 @@ return {
             </div>
 
             <p className="group-form-subtitle">
-              Selecciona hasta 2 compañeros para formar tu grupo (máximo 3 integrantes en total)
+              Selecciona tu compañero para formar tu grupo (máximo 2 integrantes en total)
             </p>
 
             <input

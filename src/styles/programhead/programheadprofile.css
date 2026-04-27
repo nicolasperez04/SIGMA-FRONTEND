@@ -666,7 +666,6 @@
 .stat-item.pending .stat-number {
   color: #5d0d12 !important;
 }
-}
 
 .stat-item.total .stat-number,
 .stat-item.rejected .stat-number {
