@@ -1,12 +1,12 @@
-import axios from "axios";
+import axios from "../api/axios"; 
 
-const API_URL = "http://localhost:8080/admin";
-const MODALITY_URL = "http://localhost:8080/modalities";
-const DOCUMENT_URL = "http://localhost:8080/required-documents";
-const STUDENT_URL = "http://localhost:8080/students";
-const FACULTY_URL = "http://localhost:8080/faculties";
-const PROGRAM_URL = "http://localhost:8080/academic-programs";
-const PROGRAM_DEGREE_URL = "http://localhost:8080/program-degree-modalities";
+const API_URL = "/admin";
+const MODALITY_URL = "/modalities";
+const DOCUMENT_URL = "/required-documents";
+const STUDENT_URL = "/students";
+const FACULTY_URL = "/faculties";
+const PROGRAM_URL = "/academic-programs";
+const PROGRAM_DEGREE_URL = "/program-degree-modalities";
 
 // Función helper para extraer datos de respuestas del backend
 const extractData = (response, fallback = []) => {
@@ -43,57 +43,38 @@ const extractData = (response, fallback = []) => {
 
 // ==================== ROLES ====================
 export const getAllRoles = async () => {
-  const token = localStorage.getItem("token");
-  const response = await axios.get(`${API_URL}/getRoles`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.get(`${API_URL}/getRoles`);
   return extractData(response);
 };
 
 export const createRole = async (roleData) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.post(`${API_URL}/createRole`, roleData, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.post(`${API_URL}/createRole`, roleData);
   return response.data;
 };
 
 export const updateRole = async (id, roleData) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.put(`${API_URL}/updateRole/${id}`, roleData, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.put(`${API_URL}/updateRole/${id}`, roleData);
   return response.data;
 };
 
 export const assignRoleToUser = async (data) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.post(`${API_URL}/assignRole`, data, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.post(`${API_URL}/assignRole`, data);
   return response.data;
 };
 
 // ==================== PERMISSIONS ====================
 export const getAllPermissions = async () => {
-  const token = localStorage.getItem("token");
-  const response = await axios.get(`${API_URL}/getPermissions`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.get(`${API_URL}/getPermissions`);
   return extractData(response);
 };
 
 export const createPermission = async (permissionData) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.post(`${API_URL}/createPermission`, permissionData, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.post(`${API_URL}/createPermission`, permissionData);
   return response.data;
 };
 
 // ==================== USERS ====================
 export const getAllUsers = async (filters = {}) => {
-  const token = localStorage.getItem("token");
   const params = new URLSearchParams();
 
   if (filters.status) params.append('status', filters.status);
@@ -105,113 +86,74 @@ export const getAllUsers = async (filters = {}) => {
     ? `${API_URL}/getUsers?${params.toString()}`
     : `${API_URL}/getUsers`;
 
-  const response = await axios.get(url, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.get(url);
   return extractData(response);
 };
 
 export const changeUserStatus = async (data) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.post(`${API_URL}/changeUserStatus`, data, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.post(`${API_URL}/changeUserStatus`, data);
   return response.data;
 };
 
 export const registerUserByAdmin = async (userData) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.post(`${API_URL}/register-user`, userData, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.post(`${API_URL}/register-user`, userData);
   return response.data;
 };
 
 // ==================== FACULTIES ====================
 export const getAllFaculties = async () => {
-  const token = localStorage.getItem("token");
-  const response = await axios.get(`${FACULTY_URL}/all`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.get(`${FACULTY_URL}/all`);
   return extractData(response);
 };
 
 export const getActiveFaculties = async () => {
-  const token = localStorage.getItem("token");
-  const response = await axios.get(`${FACULTY_URL}/active`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.get(`${FACULTY_URL}/active`);
   return extractData(response);
 };
 
 export const getFacultyDetail = async (facultyId) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.get(`${FACULTY_URL}/detail/${facultyId}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.get(`${FACULTY_URL}/detail/${facultyId}`);
   return response.data;
 };
 
 export const createFaculty = async (facultyData) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.post(`${FACULTY_URL}/create`, facultyData, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.post(`${FACULTY_URL}/create`, facultyData);
   return response.data;
 };
 
 export const updateFaculty = async (facultyId, facultyData) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.put(`${FACULTY_URL}/update/${facultyId}`, facultyData, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.put(`${FACULTY_URL}/update/${facultyId}`, facultyData);
   return response.data;
 };
 
 export const deactivateFaculty = async (facultyId) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.put(`${FACULTY_URL}/desactive/${facultyId}`, {}, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.put(`${FACULTY_URL}/desactive/${facultyId}`, {});
   return response.data;
 };
 
 // ==================== ACADEMIC PROGRAMS ====================
 export const getAllAcademicPrograms = async () => {
-  const token = localStorage.getItem("token");
-  const response = await axios.get(`${PROGRAM_URL}/all`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.get(`${PROGRAM_URL}/all`);
   return extractData(response);
 };
 
 export const getAcademicProgram = async (programId) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.get(`${PROGRAM_URL}/${programId}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.get(`${PROGRAM_URL}/${programId}`);
   return response.data;
 };
 
 export const createAcademicProgram = async (programData) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.post(`${PROGRAM_URL}/create`, programData, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.post(`${PROGRAM_URL}/create`, programData);
   return response.data;
 };
 
 export const updateAcademicProgram = async (programId, programData) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.put(`${PROGRAM_URL}/update/${programId}`, programData, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.put(`${PROGRAM_URL}/update/${programId}`, programData);
   return response.data;
 };
 
 // ==================== PROGRAM DEGREE MODALITIES ====================
 export const getProgramDegreeModalities = async (filters = {}) => {
-  const token = localStorage.getItem("token");
   const params = new URLSearchParams();
 
   if (filters.active !== undefined) params.append('active', filters.active);
@@ -219,64 +161,43 @@ export const getProgramDegreeModalities = async (filters = {}) => {
   if (filters.facultyId) params.append('facultyId', filters.facultyId);
   if (filters.academicProgramId) params.append('academicProgramId', filters.academicProgramId);
 
-  const response = await axios.get(`${PROGRAM_DEGREE_URL}/all?${params.toString()}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.get(`${PROGRAM_DEGREE_URL}/all?${params.toString()}`);
   return extractData(response);
 };
 
 export const createProgramDegreeModality = async (data) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.post(`${PROGRAM_DEGREE_URL}/create`, data, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.post(`${PROGRAM_DEGREE_URL}/create`, data);
   return response.data;
 };
 
 export const updateProgramDegreeModality = async (id, data) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.put(`${PROGRAM_DEGREE_URL}/update/${id}`, data, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.put(`${PROGRAM_DEGREE_URL}/update/${id}`, data);
   return response.data;
 };
 
 // ==================== ADMIN ASSIGNMENTS ====================
 export const assignProgramHead = async (data) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.post(`${API_URL}/assign-program-head`, data, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.post(`${API_URL}/assign-program-head`, data);
   return response.data;
 };
 
 export const assignProjectDirector = async (data) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.post(`${API_URL}/assign-project-director`, data, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.post(`${API_URL}/assign-project-director`, data);
   return response.data;
 };
 
 export const assignExaminer = async (data) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.post(`${API_URL}/assign-examiner`, data, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.post(`${API_URL}/assign-examiner`, data);
   return response.data;
 };
 
 export const assignCommitteeMember = async (data) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.post(`${API_URL}/assign-committee-member`, data, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.post(`${API_URL}/assign-committee-member`, data);
   return response.data;
 };
 
 // ==================== VIEW ASSIGNMENTS ====================
 export const getProgramHeads = async () => {
-  const token = localStorage.getItem("token");
   // TODO: Confirmar endpoint correcto para program heads
   // Por ahora comentado hasta tener el endpoint correcto
   return [];
@@ -290,7 +211,6 @@ export const getProgramHeads = async () => {
 
 // ==================== VIEW ASSIGNMENTS ====================
 export const getCommitteeMembers = async (filters = {}) => {
-  const token = localStorage.getItem("token");
   const params = new URLSearchParams();
 
   // Solo agregar parámetros si tienen valor
@@ -303,14 +223,12 @@ export const getCommitteeMembers = async (filters = {}) => {
 
   // ✅ CORRECTO: /modalities/committee
   const url = params.toString()
-    ? `http://localhost:8080/modalities/committee?${params.toString()}`
-    : `http://localhost:8080/modalities/committee`;
+    ? `${MODALITY_URL}/committee?${params.toString()}`
+    : `${MODALITY_URL}/committee`;
 
   console.log("🔍 Fetching committee members from:", url);
 
-  const response = await axios.get(url, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.get(url);
 
   console.log("✅ Committee members response:", response.data);
 
@@ -318,171 +236,126 @@ export const getCommitteeMembers = async (filters = {}) => {
 };
 // ==================== MODALITIES ====================
 export const getAllModalities = async () => {
-  const token = localStorage.getItem("token");
-  const response = await axios.get(`${MODALITY_URL}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.get(`${MODALITY_URL}`);
   return extractData(response);
 };
 
 export const getModalitiesAdmin = async (status = null) => {
-  const token = localStorage.getItem("token");
   let url = `${API_URL}/modalities`;
 
   if (status) {
     url += `?status=${status}`;
   }
 
-  const response = await axios.get(url, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.get(url);
   return extractData(response);
 };
 
 export const createModality = async (modalityData) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.post(`${MODALITY_URL}/create`, modalityData, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.post(`${MODALITY_URL}/create`, modalityData);
   return response.data;
 };
 
 export const updateModality = async (modalityId, modalityData) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.put(`${MODALITY_URL}/update/${modalityId}`, modalityData, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.put(`${MODALITY_URL}/update/${modalityId}`, modalityData);
   return response.data;
 };
 
 export const deleteModality = async (modalityId) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.put(`${MODALITY_URL}/delete/${modalityId}`, {}, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.put(`${MODALITY_URL}/delete/${modalityId}`, {});
   return response.data;
 };
 
 export const getModalityRequirements = async (modalityId, active = null) => {
-  const token = localStorage.getItem("token");
   let url = `${MODALITY_URL}/${modalityId}/requirements`;
 
   if (active !== null) {
     url += `?active=${active}`;
   }
 
-  const response = await axios.get(url, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.get(url);
   return extractData(response);
 };
 
 export const createModalityRequirements = async (modalityId, requirements) => {
-  const token = localStorage.getItem("token");
   const response = await axios.post(
     `${MODALITY_URL}/requirements/create/${modalityId}`,
-    requirements,
-    { headers: { Authorization: `Bearer ${token}` } }
+    requirements
   );
   return response.data;
 };
 
 export const updateModalityRequirements = async (modalityId, requirements) => {
-  const token = localStorage.getItem("token");
   const response = await axios.put(
     `${MODALITY_URL}/requirements/${modalityId}/update`,
-    requirements,
-    { headers: { Authorization: `Bearer ${token}` } }
+    requirements
   );
   return response.data;
 };
 
 export const deleteModalityRequirement = async (requirementId) => {
-  const token = localStorage.getItem("token");
   const response = await axios.put(
     `${MODALITY_URL}/requirements/delete/${requirementId}`,
-    {},
-    { headers: { Authorization: `Bearer ${token}` } }
+    {}
   );
   return response.data;
 };
 
 export const activateModalityRequirement = async (requirementId) => {
-  const token = localStorage.getItem("token");
   const response = await axios.put(
     `${MODALITY_URL}/requirements/active/${requirementId}`,
-    {},
-    { headers: { Authorization: `Bearer ${token}` } }
+    {}
   );
   return response.data;
 };
 
 // ==================== DOCUMENTS ====================
 export const createRequiredDocument = async (documentData) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.post(`${DOCUMENT_URL}/create`, documentData, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.post(`${DOCUMENT_URL}/create`, documentData);
   return response.data;
 };
 
 export const updateRequiredDocument = async (documentId, documentData) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.put(`${DOCUMENT_URL}/update/${documentId}`, documentData, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.put(`${DOCUMENT_URL}/update/${documentId}`, documentData);
   return response.data;
 };
 
 export const viewRequiredDocuments = async (modalityId) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.get(`${DOCUMENT_URL}/view/${modalityId}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.get(`${DOCUMENT_URL}/view/${modalityId}`);
   return extractData(response);
 };
 
 export const getRequiredDocumentsByModalityAndStatus = async (modalityId, active = null) => {
-  const token = localStorage.getItem("token");
   let url = `${DOCUMENT_URL}/modality/${modalityId}`;
 
   if (active !== null) {
     url += `/filter?active=${active}`;
   }
 
-  const response = await axios.get(url, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.get(url);
   return extractData(response);
 };
 
 export const deleteRequiredDocument = async (documentId) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.put(`${DOCUMENT_URL}/delete/${documentId}`, {}, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.put(`${DOCUMENT_URL}/delete/${documentId}`, {});
   return response.data;
 };
 
 export const updateModalityRequirement = async (modalityId, requirementId, requirementData) => {
-  const token = localStorage.getItem("token");
   const response = await axios.put(
     `${MODALITY_URL}/requirements/${modalityId}/update/${requirementId}`,
-    requirementData,
-    { headers: { Authorization: `Bearer ${token}` } }
+    requirementData
   );
   return response.data;
 };
 
 // ==================== STUDENT CANCELLATIONS ====================
 export const uploadCancellationDocument = async (formData) => {
-  const token = localStorage.getItem("token");
   const response = await axios.post(
     `${STUDENT_URL}/uploadCancellationDocument`,
     formData,
     {
       headers: {
-        Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
       },
     }
@@ -491,30 +364,20 @@ export const uploadCancellationDocument = async (formData) => {
 };
 
 export const requestCancellationModality = async () => {
-  const token = localStorage.getItem("token");
-  const response = await axios.post(
-    `${STUDENT_URL}/requestCancellation`,
-    {},
-    { headers: { Authorization: `Bearer ${token}` } }
-  );
+  const response = await axios.post(`${STUDENT_URL}/requestCancellation`, {});
   return response.data;
 };
 
 // ==================== COUNCIL CANCELLATIONS ====================
 export const getPendingCancellations = async () => {
-  const token = localStorage.getItem("token");
-  const response = await axios.get(`${MODALITY_URL}/pendingCancellations`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.get(`${MODALITY_URL}/pendingCancellations`);
   return extractData(response);
 };
 
 export const viewCancellationDocument = async (studentModalityId) => {
-  const token = localStorage.getItem("token");
   const response = await axios.get(
     `${MODALITY_URL}/viewCancellationDocument/${studentModalityId}`,
     {
-      headers: { Authorization: `Bearer ${token}` },
       responseType: "blob",
     }
   );
@@ -522,29 +385,20 @@ export const viewCancellationDocument = async (studentModalityId) => {
 };
 
 export const approveCancellation = async (studentModalityId) => {
-  const token = localStorage.getItem("token");
-  const response = await axios.post(
-    `${MODALITY_URL}/approveCancellation/${studentModalityId}`,
-    {},
-    { headers: { Authorization: `Bearer ${token}` } }
-  );
+  const response = await axios.post(`${MODALITY_URL}/approveCancellation/${studentModalityId}`, {});
   return response.data;
 };
 
 export const rejectCancellation = async (studentModalityId, reason) => {
-  const token = localStorage.getItem("token");
   const response = await axios.post(
     `${MODALITY_URL}/rejectCancellation/${studentModalityId}`,
-    { reason },
-    { headers: { Authorization: `Bearer ${token}` } }
+    { reason }
   );
   return response.data;
 };
 
 // ==================== SECRETARY - FILTERS ====================
 export const getStudentsByFilters = async (statuses = [], searchName = "") => {
-  const token = localStorage.getItem("token");
-
   let url = `${MODALITY_URL}/students?`;
 
   if (statuses.length > 0) {
@@ -557,8 +411,6 @@ export const getStudentsByFilters = async (statuses = [], searchName = "") => {
 
   url = url.replace(/[&?]$/, "");
 
-  const response = await axios.get(url, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.get(url);
   return extractData(response);
 };
