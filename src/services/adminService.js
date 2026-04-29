@@ -201,12 +201,6 @@ export const getProgramHeads = async () => {
   // TODO: Confirmar endpoint correcto para program heads
   // Por ahora comentado hasta tener el endpoint correcto
   return [];
-  /*
-  const response = await axios.get(`${API_URL}/program-heads`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return extractData(response);
-  */
 };
 
 // ==================== VIEW ASSIGNMENTS ====================

@@ -1,7 +1,5 @@
 // src/services/reportsService.js
-import axios from 'axios';
-
-const API_URL = 'http://localhost:8080';
+import axios from "../api/axios";
 
 // ========================================
 // CONSTANTES DEL BACKEND (EXACTAS)
@@ -242,24 +240,17 @@ const normalizeStudent = (student) => {
 // FUNCIÓN GENÉRICA PARA DESCARGAR PDFs
 // ========================================
 
-const downloadPDF = async (url, method = 'GET', data = null, filename = 'reporte.pdf') => {
+const downloadPDF = async (url, method = "GET", data = null, filename = "reporte.pdf") => {
   try {
-    const token = localStorage.getItem('token');
-    
-    if (!token) {
-      throw new Error('No hay sesión activa. Por favor inicia sesión.');
-    }
-
     console.log(`🚀 Descargando: ${method} ${url}`);
     if (data) {
       console.log('📦 Data enviada:', JSON.stringify(data, null, 2));
     }
 
     const config = {
-      url: `${API_URL}${url}`,
+      url,
       method: method,
       headers: {
-        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       responseType: 'blob',
@@ -371,26 +362,12 @@ const downloadPDFWithFallbackUrls = async (urls = [], filename = 'reporte.pdf') 
  */
 export const getAvailableModalityTypes = async () => {
   try {
-    const token = localStorage.getItem('token');
-    
-    const response = await fetch(`${API_URL}/reports/modalities/types`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error(`Error al obtener tipos de modalidad: ${response.status}`);
-    }
-
-    const result = await response.json();
-    console.log('✅ Tipos de modalidad obtenidos:', result.data);
-    
-    return result.data?.availableTypes || [];
+    const response = await axios.get("/reports/modalities/types");
+    const result = response.data;
+    console.log("✅ Tipos de modalidad obtenidos:", result.data || result);
+    return result.data?.availableTypes || result.availableTypes || [];
   } catch (error) {
-    console.error('❌ Error al obtener tipos de modalidad:', error);
+    console.error("❌ Error al obtener tipos de modalidad:", error);
     return [];
   }
 };
@@ -400,12 +377,6 @@ export const getAvailableModalityTypes = async () => {
  * Este endpoint se usa para obtener el studentId requerido en trazabilidad por estudiante
  */
 export const getStudentsByAcademicProgram = async (nameFilter = '') => {
-  const token = localStorage.getItem('token');
-
-  if (!token) {
-    throw new Error('No hay sesión activa. Por favor inicia sesión.');
-  }
-
   const trimmedFilter = nameFilter.trim();
   const encodedFilter = encodeURIComponent(trimmedFilter);
   const queryVariants = trimmedFilter
@@ -429,31 +400,8 @@ export const getStudentsByAcademicProgram = async (nameFilter = '') => {
       const url = query ? `${base}?${query}` : base;
 
       try {
-        const response = await fetch(`${API_URL}${url}`, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        });
-
-        if (!response.ok) {
-          if (response.status === 404) {
-            continue;
-          }
-
-          if (response.status === 401) {
-            throw new Error('Sesión expirada. Por favor inicia sesión nuevamente.');
-          }
-
-          if (response.status === 403) {
-            throw new Error('No tienes permisos para consultar estudiantes del programa.');
-          }
-
-          throw new Error(`Error al consultar estudiantes (${response.status})`);
-        }
-
-        const payload = await response.json();
+        const response = await axios.get(url);
+        const payload = response.data;
         const students = extractArrayFromResponse(payload)
           .map(normalizeStudent)
           .filter(Boolean);
@@ -484,6 +432,19 @@ export const getStudentsByAcademicProgram = async (nameFilter = '') => {
 
         return locallyFilteredStudents;
       } catch (error) {
+        const status = error.response?.status;
+        if (status === 404) {
+          continue;
+        }
+
+        if (status === 401) {
+          throw new Error('Sesión expirada. Por favor inicia sesión nuevamente.');
+        }
+
+        if (status === 403) {
+          throw new Error('No tienes permisos para consultar estudiantes del programa.');
+        }
+
         lastError = error;
       }
     }
@@ -500,22 +461,11 @@ export const getStudentsByAcademicProgram = async (nameFilter = '') => {
  */
 export const getDirectors = async () => {
   try {
-    const token = localStorage.getItem('token');
-    // Nuevo endpoint según backend
-    const response = await fetch(`${API_URL}/modalities/project-directors`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    });
-
-    if (!response.ok) {
-      console.warn('⚠️ No se pudo obtener lista de directores');
-      return [];
-    }
-
-    const directors = await response.json();
+    const response = await axios.get("/modalities/project-directors");
+    const payload = response.data;
+    const directors = Array.isArray(payload)
+      ? payload
+      : payload?.data || [];
     // El backend retorna un array de ProjectDirectorResponse
     // Adaptar a formato esperado por el frontend
     const mapped = directors.map(d => ({
@@ -819,19 +769,11 @@ export const downloadModalityTraceabilityByModalityPDF = async (studentModalityI
  */
 export const testConnection = async () => {
   try {
-    const token = localStorage.getItem('token');
-    const response = await fetch(`${API_URL}/reports/health`, {
-      headers: { 'Authorization': `Bearer ${token}` }
-    });
-    
-    if (response.ok) {
-      const data = await response.json();
-      console.log('✅ Conexión exitosa:', data);
-      return true;
-    }
-    return false;
+    const response = await axios.get("/reports/health");
+    console.log("✅ Conexión exitosa:", response.data);
+    return true;
   } catch (error) {
-    console.error('❌ Error de conexión:', error);
+    console.error("❌ Error de conexión:", error);
     return false;
   }
 };

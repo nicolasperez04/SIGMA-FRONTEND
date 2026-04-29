@@ -1,3 +1,5 @@
+import axios from "../api/axios";
+
 // ========================================
 // 🏅 OBTENER TIPO DE JURADO (ExaminerType)
 // ========================================
@@ -16,7 +18,6 @@ export const getExaminerTypeForModality = async (studentModalityId) => {
   const response = await axios.get(`/modalities/examiner-type/${studentModalityId}`);
   return response.data;
 };
-import axios from "../api/axios";
 
 // ========================================
 // 📋 OBTENER MIS ASIGNACIONES COMO JURADO
