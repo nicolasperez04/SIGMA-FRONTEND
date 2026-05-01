@@ -121,42 +121,41 @@ export const AuthProvider = ({ children }) => {
 
   // 🔄 Restaurar sesión al recargar
   useEffect(() => {
+  const restoreSession = () => { // Usamos una función interna para mayor claridad
     console.log("🔄 Inicializando AuthContext...");
     const storedToken = localStorage.getItem("token");
 
-    if (storedToken) {
-      try {
-        console.log("📦 Token encontrado en localStorage");
-        const decoded = jwtDecode(storedToken);
-        console.log("🔍 Token decodificado:", decoded);
-        
-        const extractedRole = extractRole(decoded);
-        const extractedUser = extractUserInfo(decoded);
-        
-        console.log("🎯 Rol extraído:", extractedRole);
-        console.log("👤 Usuario extraído:", extractedUser);
-        
-        if (!extractedRole) {
-          console.error("❌ No se pudo extraer rol, eliminando token");
-          localStorage.removeItem("token");
-          setLoading(false);
-          return;
-        }
-        
+    if (!storedToken || storedToken === "undefined" || storedToken === "null") {
+      console.log("📭 No hay token válido en localStorage");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const decoded = jwtDecode(storedToken);
+      const extractedRole = extractRole(decoded);
+      const extractedUser = extractUserInfo(decoded);
+
+      if (extractedRole) {
         setToken(storedToken);
         setRole(extractedRole);
         setUser(extractedUser);
-      } catch (error) {
-        console.error("❌ Error al decodificar token:", error);
+        console.log("✅ Sesión restaurada:", extractedRole);
+      } else {
         localStorage.removeItem("token");
       }
-    } else {
-      console.log("📭 No hay token en localStorage");
+    } catch (error) {
+      console.error("❌ Error crítico en AuthContext:", error);
+      localStorage.removeItem("token");
+    } finally {
+      // ESTA LÍNEA ES LA MÁS IMPORTANTE
+      // Garantiza que la pantalla "Cargando..." del ProtectedRoute desaparezca
+      setLoading(false); 
     }
+  };
 
-    setLoading(false);
-    console.log("✅ AuthContext inicializado");
-  }, []);
+  restoreSession();
+}, []);
 
   // ✅ Escuchar evento de unauthorized desde axios
   useEffect(() => {
