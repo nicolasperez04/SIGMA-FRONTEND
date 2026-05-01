@@ -1,7 +1,10 @@
 import axios from "axios";
 
 // ⚙️ Obtener baseURL del entorno o usar valor por defecto
-const baseURL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
+const baseURL = import.meta.env.VITE_API_BASE_URL;
+if (!baseURL) {
+  throw new Error("❌ VITE_API_BASE_URL no está definido en producción");
+}
 
 const instance = axios.create({
   baseURL,
@@ -80,4 +83,7 @@ instance.interceptors.response.use(
   }
 );
 
+console.log("🔥 ENV VITE_API_BASE_URL:", import.meta.env.VITE_API_BASE_URL);
+console.log("🔥 BASE URL FINAL:", baseURL);
+console.log("🔥 AXIOS BASE URL:", instance.defaults.baseURL);
 export default instance;
